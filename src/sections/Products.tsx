@@ -1,68 +1,87 @@
 import { useState } from 'react'
 
-const PF = [
-  { tag: '02 · VIDA', name: 'Vida' },
-  { tag: '03 · VIDA', name: 'Acidentes Pessoais' },
-  { tag: '04 · MOBILIDADE', name: 'Franquia Auto' },
-  { tag: '05 · EQUIPAMENTOS', name: 'Celular' },
-  { tag: '06 · EQUIPAMENTOS', name: 'Notebook e Tablet' },
-  { tag: '07 · FINANCEIRO', name: 'Pix Protegido' },
-  { tag: '08 · FINANCEIRO', name: 'Cartão Protegido' },
-  { tag: '09 · FINANCEIRO', name: 'Bolsa Protegida' },
+const FAMILIES_PF = [
+  { no: '01', name: 'Moradia', links: [{ label: 'Residencial', badge: true, href: '#simulador' }] },
+  {
+    no: '02',
+    name: 'Vida e Acidentes',
+    links: [
+      { label: 'Vida', href: '#publicos' },
+      { label: 'Acidentes Pessoais', href: '#publicos' },
+    ],
+  },
+  { no: '03', name: 'Mobilidade', links: [{ label: 'Franquia Auto', href: '#publicos' }] },
+  {
+    no: '04',
+    name: 'RD Equipamentos',
+    links: [
+      { label: 'Celular', href: '#publicos' },
+      { label: 'Notebook', href: '#publicos' },
+      { label: 'Tablet', href: '#publicos' },
+    ],
+  },
+  {
+    no: '05',
+    name: 'RD Financeiro',
+    links: [
+      { label: 'Pix Protegido', href: '#publicos' },
+      { label: 'Cartão Protegido', href: '#publicos' },
+      { label: 'Bolsa Protegida', href: '#publicos' },
+    ],
+  },
 ]
 
-const PJ = [
-  { tag: '01 · PESSOAS', name: 'Vida em Grupo' },
-  { tag: '02 · ACIDENTES', name: 'AP Coletivo' },
-  { tag: '03 · CRÉDITO', name: 'Prestamista' },
+const FAMILIES_PJ = [
+  {
+    no: '06',
+    name: 'Proteção empresarial',
+    links: [
+      { label: 'Vida em Grupo', href: '#publicos' },
+      { label: 'Acidentes Pessoais Coletivo', href: '#publicos' },
+      { label: 'Prestamista', href: '#publicos' },
+    ],
+  },
 ]
 
 export function Products() {
   const [pf, setPf] = useState(true)
-  const items = pf ? PF : PJ
+  const families = pf ? FAMILIES_PF : FAMILIES_PJ
 
   return (
-    <section className="bento" id="produtos">
+    <section className="catalog" id="catalogo">
       <div className="wrap">
-        <div className="bento-head">
+        <div className="section-head reveal">
           <div>
             <p className="kicker">Catálogo completo</p>
             <h2>Proteção do seu jeito.</h2>
           </div>
-          <div className="bento-toggle">
-            <button aria-pressed={pf} onClick={() => setPf(true)}>
-              Para Você · 10
-            </button>
-            <button aria-pressed={!pf} onClick={() => setPf(false)}>
-              Empresa · 3
-            </button>
-          </div>
+          <p>
+            Treze produtos organizados por momento de vida. Escolha um caminho e conheça cada
+            cobertura sem jargão.
+          </p>
         </div>
-
-        <div className="bento-grid">
-          {pf && (
-            <a className="bento-card bento-feature" href="#simulador">
-              <small>01 · MORADIA · DESTAQUE</small>
-              <div>
-                <h3>Residencial</h3>
-                <p>
-                  A proteção mais completa para sua casa, com estimativa de preço na hora e
-                  assistência 24h desde o primeiro dia.
-                </p>
+        <div className="catalog-toggle reveal">
+          <button aria-pressed={pf} onClick={() => setPf(true)}>
+            Para Você · 10
+          </button>
+          <button aria-pressed={!pf} onClick={() => setPf(false)}>
+            Para sua Empresa · 3
+          </button>
+        </div>
+        <div className="reveal reveal-late">
+          {families.map((f) => (
+            <article className="family" key={f.no}>
+              <span className="family-no">{f.no}</span>
+              <h3>{f.name}</h3>
+              <div className="product-links">
+                {f.links.map((l) => (
+                  <a key={l.label} href={l.href}>
+                    {l.label}
+                    {'badge' in l && l.badge && <span className="badge">destaque</span>}
+                  </a>
+                ))}
               </div>
-              <span className="pill pill-neon">Simular agora →</span>
-            </a>
-          )}
-          {items.map((p, i) => (
-            <a
-              className={`bento-card${!pf && i === 0 ? ' bento-wide' : ''}`}
-              href="#publicos"
-              key={p.name}
-            >
-              <small>{p.tag}</small>
-              <h3>{p.name}</h3>
-              <span className="go">→</span>
-            </a>
+            </article>
           ))}
         </div>
       </div>
@@ -72,7 +91,7 @@ export function Products() {
 
 const COVERED = [
   ['Incêndio, raio e explosão', 'cobertura básica de toda apólice'],
-  ['Danos elétricos', 'eletrodomésticos queimados por oscilação'],
+  ['Danos elétricos', 'geladeira, TV e ar queimados por oscilação'],
   ['Roubo e furto qualificado', 'com vestígio de arrombamento'],
   ['Vendaval, granizo e queda de árvore', 'inclusive o telhado'],
   ['Responsabilidade civil familiar', 'danos causados a um vizinho'],
@@ -81,7 +100,7 @@ const COVERED = [
 
 const NOT_COVERED = [
   ['Furto simples', 'sem vestígio de arrombamento'],
-  ['Desgaste natural', 'infiltração antiga, mofo, falta de manutenção'],
+  ['Desgaste natural', 'infiltração antiga, mofo e falta de manutenção'],
   ['Joias e dinheiro em espécie', 'salvo cobertura contratada à parte'],
   ['Imóvel desocupado', 'acima de 90 dias seguidos'],
   ['Obras e reformas estruturais', 'durante a execução'],
@@ -90,36 +109,37 @@ const NOT_COVERED = [
 
 export function Transparency() {
   return (
-    <section className="clear">
+    <section className="transparency">
       <div className="wrap">
-        <div className="clear-head">
-          <p className="kicker">Sem letra miúda</p>
+        <div className="trans-head reveal">
+          <p className="kicker">Transparência residencial</p>
           <h2>O que entra. E o que fica de fora.</h2>
+          <p>Os dois lados com o mesmo tamanho e a mesma importância.</p>
         </div>
-        <div className="clear-board">
-          <div className="clear-col yes">
+        <div className="cover-board reveal reveal-late">
+          <div className="cover-col">
             <h3>Está coberto</h3>
             <ul>
-              {COVERED.map(([b, s]) => (
+              {COVERED.map(([b, s], i) => (
                 <li key={b}>
-                  <span className="dot">✓</span>
+                  <span className="num">0{i + 1}</span>
                   <div>
                     <b>{b}</b>
-                    <span className="desc">{s}</span>
+                    <p>{s}</p>
                   </div>
                 </li>
               ))}
             </ul>
           </div>
-          <div className="clear-col not">
+          <div className="cover-col no">
             <h3>Não está coberto</h3>
             <ul>
-              {NOT_COVERED.map(([b, s]) => (
+              {NOT_COVERED.map(([b, s], i) => (
                 <li key={b}>
-                  <span className="dot">×</span>
+                  <span className="num">×0{i + 1}</span>
                   <div>
                     <b>{b}</b>
-                    <span className="desc">{s}</span>
+                    <p>{s}</p>
                   </div>
                 </li>
               ))}

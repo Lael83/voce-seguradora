@@ -22,80 +22,86 @@ export function Cotacao() {
   }
 
   return (
-    <section className="sim" id="simulador">
-      <div className="wrap sim-grid">
-        <div className="sim-copy">
-          <p className="kicker">Produto em destaque · Residencial</p>
-          <h2>
-            Sua casa. <em>Seu ritmo.</em>
-          </h2>
-          <p>
-            Escolha quanto de proteção você quer e veja uma estimativa na hora — sem cadastro, sem
-            telefone, sem letra miúda.
-          </p>
-          <div className="sim-badges">
-            <span>Incêndio e raio</span>
-            <span>Danos elétricos</span>
-            <span>Vendaval e granizo</span>
-            <span>Roubo qualificado</span>
-            <span>Assistência 24h</span>
-          </div>
-        </div>
-
-        <div className="sim-card">
-          <h3>Monte sua estimativa</h3>
-          <div className="sim-field">
-            <label htmlFor="cep">CEP do imóvel</label>
-            <input
-              id="cep"
-              type="text"
-              inputMode="numeric"
-              maxLength={9}
-              placeholder="00000-000"
-              value={cep}
-              onChange={(e) => maskCep(e.target.value)}
-            />
-          </div>
-          <div className="sim-field">
-            <label htmlFor="lmi">Importância segurada</label>
-            <div className="range-row">
-              <input
-                id="lmi"
-                type="range"
-                min={50000}
-                max={1000000}
-                step={10000}
-                value={lmi}
-                aria-describedby="range-help"
-                onChange={(e) => setLmi(parseInt(e.target.value, 10))}
-              />
-              <output>{money(lmi)}</output>
-            </div>
-            <p className="range-help" id="range-help">
-              De R$ 50 mil a R$ 1 milhão
+    <section className="residential" id="residencial">
+      <div className="wrap">
+        <div className="res-head reveal">
+          <div>
+            <p className="kicker" style={{ color: 'var(--neon)' }}>
+              Produto em destaque · 01
             </p>
+            <h2>
+              Sua casa. Seu <span>ritmo.</span>
+            </h2>
           </div>
-          <div className="sim-plans" role="group" aria-label="Escolha o plano">
-            {(Object.keys(RATES) as Plan[]).map((p) => (
-              <button key={p} className="sim-plan" aria-pressed={plan === p} onClick={() => setPlan(p)}>
-                <strong>{PLAN_LABEL[p]}</strong>
-                <small>{PLAN_DESC[p]}</small>
-              </button>
-            ))}
-          </div>
-          <div className="sim-result" aria-live="polite">
-            <div>
-              <small>Estimativa mensal</small>
-              <strong>{money(price)}</strong>
-              <span className="per">plano {PLAN_LABEL[plan]}</span>
-            </div>
-            <a className="pill pill-neon" href="#publicos">
-              Continuar →
-            </a>
-          </div>
-          <p className="sim-note">
-            Valor estimado. O preço final é calculado na cotação. Sem pedir seus dados pessoais.
+          <p>
+            Incêndio, danos elétricos, vendaval, roubo qualificado e assistência 24h. Você escolhe
+            o valor máximo de proteção e vê uma estimativa na hora.
           </p>
+        </div>
+        <div className="quote reveal reveal-late" id="simulador">
+          <div className="quote-form">
+            <h3>Monte uma estimativa</h3>
+            <div className="field-grid">
+              <div className="field">
+                <label htmlFor="cep">CEP do imóvel</label>
+                <input
+                  id="cep"
+                  type="text"
+                  inputMode="numeric"
+                  maxLength={9}
+                  placeholder="00000-000"
+                  value={cep}
+                  onChange={(e) => maskCep(e.target.value)}
+                />
+              </div>
+              <div className="field">
+                <label htmlFor="lmi">Valor máximo que pagamos (importância segurada)</label>
+                <div className="range-row">
+                  <input
+                    id="lmi"
+                    type="range"
+                    min={50000}
+                    max={1000000}
+                    step={10000}
+                    value={lmi}
+                    aria-describedby="range-help"
+                    onChange={(e) => setLmi(parseInt(e.target.value, 10))}
+                  />
+                  <output>{money(lmi)}</output>
+                </div>
+                <p className="range-help" id="range-help">
+                  De R$ 50 mil a R$ 1 milhão
+                </p>
+              </div>
+            </div>
+            <div className="plans" role="group" aria-label="Escolha o plano">
+              {(Object.keys(RATES) as Plan[]).map((p) => (
+                <button key={p} className="plan" aria-pressed={plan === p} onClick={() => setPlan(p)}>
+                  <strong>{PLAN_LABEL[p]}</strong>
+                  <small>{PLAN_DESC[p]}</small>
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="price" aria-live="polite">
+            <div>
+              <span className="price-label">Estimativa mensal</span>
+              {/* key força o pulso a cada mudança de valor */}
+              <strong className="tick" key={price}>
+                {money(price)}
+              </strong>
+              <span className="per">por mês · plano {PLAN_LABEL[plan]}</span>
+            </div>
+            <div>
+              <p className="price-note">
+                Valor estimado. O preço final é calculado na cotação. Sem pedir seus dados
+                pessoais.
+              </p>
+              <a className="btn btn-neon" href="#publicos">
+                Continuar cotação <span>→</span>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </section>

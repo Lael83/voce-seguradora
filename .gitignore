@@ -10,3 +10,5 @@ dist
 # material interno da marca — nao publicar
 *.pdf
 tsconfig.tsbuildinfo
+.playwright-mcp/
+*.jpeg

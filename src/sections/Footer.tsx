@@ -6,17 +6,23 @@ export function Footer() {
       <div className="wrap">
         <div className="footer-grid">
           <div className="footer-brand">
-            <a href="#topo" aria-label="Você Seguradora">
+            <a className="brand" href="#conteudo">
               <LogoLockup className="lockup" />
             </a>
             <p>Você em movimento. Simples de entender, fácil de contratar.</p>
           </div>
           <div>
-            <h3>Seguros</h3>
+            <h3>Para Você</h3>
             <a href="#simulador">Residencial</a>
-            <a href="#produtos">Vida e Acidentes</a>
-            <a href="#produtos">Franquia Auto</a>
-            <a href="#produtos">Para sua Empresa</a>
+            <a href="#catalogo">Vida</a>
+            <a href="#catalogo">Acidentes Pessoais</a>
+            <a href="#catalogo">Franquia Auto</a>
+          </div>
+          <div>
+            <h3>Para sua Empresa</h3>
+            <a href="#catalogo">Vida em Grupo</a>
+            <a href="#catalogo">AP Coletivo</a>
+            <a href="#catalogo">Prestamista</a>
           </div>
           <div>
             <h3>Canais</h3>
@@ -27,8 +33,8 @@ export function Footer() {
           </div>
           <div>
             <h3>Institucional</h3>
-            <a href="#publicos">Quem somos</a>
-            <a href="#produtos">Produtos</a>
+            <a href="#institucional">Quem somos</a>
+            <a href="#residencial">Produtos</a>
             <a href="#rodape">Fale com a gente</a>
           </div>
         </div>

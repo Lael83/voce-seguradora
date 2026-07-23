@@ -24,15 +24,17 @@ const AUDIENCES = [
 
 export function Audiences() {
   return (
-    <section className="paths" id="publicos">
+    <section className="audiences" id="publicos">
       <div className="wrap">
-        <div className="clear-head">
-          <p className="kicker">Três públicos. Uma marca.</p>
-          <h2>Qual é o seu próximo passo?</h2>
+        <div className="section-head reveal">
+          <div>
+            <p className="kicker">Três públicos. Uma marca.</p>
+            <h2>Qual é o seu próximo passo?</h2>
+          </div>
         </div>
-        <div className="paths-grid">
+        <div className="aud-grid reveal reveal-late">
           {AUDIENCES.map((a) => (
-            <article className="path" key={a.tag}>
+            <article className="aud" key={a.tag}>
               <small>{a.tag}</small>
               <h3>{a.title}</h3>
               <p>{a.text}</p>
