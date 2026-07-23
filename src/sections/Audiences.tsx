@@ -32,7 +32,7 @@ export function Audiences() {
             <h2>Qual é o seu próximo passo?</h2>
           </div>
         </div>
-        <div className="aud-grid reveal reveal-late">
+        <div className="aud-grid stagger">
           {AUDIENCES.map((a) => (
             <article className="aud" key={a.tag}>
               <small>{a.tag}</small>

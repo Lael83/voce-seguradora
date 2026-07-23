@@ -68,7 +68,7 @@ export function Products() {
             Para sua Empresa · 3
           </button>
         </div>
-        <div className="reveal reveal-late">
+        <div className="stagger">
           {families.map((f) => (
             <article className="family" key={f.no}>
               <span className="family-no">{f.no}</span>

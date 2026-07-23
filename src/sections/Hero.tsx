@@ -65,7 +65,7 @@ export function Hero() {
             </button>
           </div>
         </div>
-        <div className="quick-products">
+        <div className="quick-products stagger in">
           {quick.map((q) => (
             <a key={q.tag} href={q.href}>
               <small>{q.tag}</small>
@@ -74,6 +74,9 @@ export function Hero() {
           ))}
         </div>
       </div>
+      <span className="scroll-cue" aria-hidden="true">
+        ↓
+      </span>
     </section>
   )
 }

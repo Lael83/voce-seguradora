@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const RATES = { essence: 0.00487, gold: 0.00586, prime: 0.00832 } as const
 type Plan = keyof typeof RATES
@@ -9,12 +9,42 @@ function money(v: number) {
   return 'R$ ' + v.toLocaleString('pt-BR')
 }
 
+/* Contador: interpola do valor anterior ao novo em ~400ms. */
+function useCountUp(target: number) {
+  const [shown, setShown] = useState(target)
+  const prev = useRef(target)
+
+  useEffect(() => {
+    const from = prev.current
+    prev.current = target
+    if (from === target) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setShown(target)
+      return
+    }
+    const t0 = performance.now()
+    const dur = 400
+    let raf = 0
+    function step(t: number) {
+      const p = Math.min((t - t0) / dur, 1)
+      const eased = 1 - Math.pow(1 - p, 3)
+      setShown(Math.round(from + (target - from) * eased))
+      if (p < 1) raf = requestAnimationFrame(step)
+    }
+    raf = requestAnimationFrame(step)
+    return () => cancelAnimationFrame(raf)
+  }, [target])
+
+  return shown
+}
+
 export function Cotacao() {
   const [cep, setCep] = useState('')
   const [lmi, setLmi] = useState(300000)
   const [plan, setPlan] = useState<Plan>('essence')
 
   const price = Math.round(((lmi * RATES[plan]) / 12) * 1.0738)
+  const shownPrice = useCountUp(price)
 
   function maskCep(v: string) {
     const d = v.replace(/\D/g, '').slice(0, 8)
@@ -86,10 +116,7 @@ export function Cotacao() {
           <div className="price" aria-live="polite">
             <div>
               <span className="price-label">Estimativa mensal</span>
-              {/* key força o pulso a cada mudança de valor */}
-              <strong className="tick" key={price}>
-                {money(price)}
-              </strong>
+              <strong>{money(shownPrice)}</strong>
               <span className="per">por mês · plano {PLAN_LABEL[plan]}</span>
             </div>
             <div>

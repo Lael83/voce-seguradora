@@ -20,7 +20,7 @@ export function PortalMockup() {
   return (
     <section className="broker" id="corretor" aria-labelledby="broker-title">
       <div className="wrap broker-grid">
-        <div className="broker-copy reveal">
+        <div className="broker-copy reveal reveal-left">
           <p className="kicker" style={{ color: 'var(--neon)' }}>
             Área do corretor
           </p>
@@ -37,7 +37,7 @@ export function PortalMockup() {
             ))}
           </ul>
         </div>
-        <div className="portal-shell reveal reveal-late" aria-label="Demonstração do acesso ao Portal do Corretor">
+        <div className="portal-shell reveal reveal-right reveal-late" aria-label="Demonstração do acesso ao Portal do Corretor">
           <div className="portal-top">
             <strong>Portal do Corretor</strong>
             <span>ambiente demonstrativo</span>
